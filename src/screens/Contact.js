@@ -60,14 +60,12 @@ const Index = () => {
     form[stateName] = e.target.value;
 
     if (!e.target.value) {
-      error[stateName] = "Please enter your";
+      error[stateName] = "Please enter your ";
     } else {
       if (stateName === "emailAddress") {
-        if (!validator.check(form[stateName], "required|email")) {
-          error[stateName] = "Please enter a valid ";
-        } else {
-          error[stateName] = null;
-        }
+        error[stateName] = (!validator.check(form[stateName], "required|email")) 
+          ?  "Please enter a valid "
+          :  null;
       } else {
         error[stateName] = null;
       }
