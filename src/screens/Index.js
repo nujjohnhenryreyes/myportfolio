@@ -140,7 +140,7 @@ const Index = () => {
                                   </CardTitle>                      
                                   { getAboutItems() }
                                   <div className="row">
-                                    <div className="col-sm-6 col-md-12 col-xl-4" style={{ padding: "0px 4px" }}>
+                                    <div className="col-sm-6 col-md-12 col-xl-4" style={styles.btnCols}>
                                       <Button 
                                         onMouseEnter={(e) => handleMouseHover(e, "#325083")} 
                                         onMouseLeave={(e) => handleMouseHover(e, "#263f6a")}
@@ -148,7 +148,7 @@ const Index = () => {
                                             <i className="fa fa-download"/> Download Resume
                                       </Button>   
                                       </div> 
-                                      <div className="col-sm-6 col-md-12 col-xl-4" style={{ padding: "0px 4px" }}>
+                                      <div className="col-sm-6 col-md-12 col-xl-4" style={styles.btnCols}>
                                       <Button 
                                         onMouseEnter={(e) => handleMouseHover(e, "#a19898")} 
                                         onMouseLeave={(e) => handleMouseHover(e, "#8c8383")}
@@ -226,6 +226,9 @@ const styles = {
   mainRow: { 
     height: "100%", 
     padding: "3px"
+  },
+  btnCols: { 
+    padding: "0px 4px" 
   },
   colSideNav: { 
     paddingRight: "10px", 
