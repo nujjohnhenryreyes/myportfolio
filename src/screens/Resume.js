@@ -19,9 +19,11 @@ import Theme from '../constants/Theme';
 import SkillBar from 'react-skillbars';
 
 const Resume = () => {
+  const mode = localStorage.getItem("light-mode");
+  
   /* States */
   const [isLoading, loadingState] = React.useState(true);
-  const [isLightMode, lightModesState] = React.useState(true);
+  const [isLightMode, lightModesState] = React.useState(([null, `true`].includes(mode))? true : false);
   const [admin, adminState] = React.useState({
       firstName: "Nuj John Henry",
       middleName: "Vera",
@@ -151,6 +153,11 @@ const Resume = () => {
     return listItems;
   }
 
+  const switchMode = (e) => {
+    lightModesState(e.target.checked);
+    localStorage.setItem("light-mode", e.target.checked);
+  }
+
   if(!isLoading){
     return (
       <div className="main">  
@@ -173,7 +180,7 @@ const Resume = () => {
                               className="switch-checkbox"
                               id="switch-mode"
                               checked={isLightMode}
-                              onChange={e => lightModesState(e.target.checked)}
+                              onChange={e => switchMode(e)}
                               type="checkbox"
                               style={{ display: "none" }}
                             />

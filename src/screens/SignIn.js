@@ -24,9 +24,11 @@ import ComponentValidator from "simple-react-validator";
 const validator = new ComponentValidator();
 
 const Index = () => {
+  const mode = localStorage.getItem("light-mode");
+
   /* States */
   const [isLoading, loadingState] = React.useState(true);
-  const [isLightMode, lightModesState] = React.useState(true);
+  const [isLightMode, lightModesState] = React.useState(([null, `true`].includes(mode))? true : false);
   const [error, errorState] = React.useState({});
   const [admin, adminState] = React.useState({
       firstName: "Nuj John Henry",
@@ -50,20 +52,25 @@ const Index = () => {
     }, 1000);
   }, []);
 
-    /* Handles */
-    const handleOnChange = (e, stateName) => {
-      form[stateName] = e.target.value;
-      error[stateName] = (!e.target.value) ? "Please enter your" : null;
-      formState({ ...form });
-      errorState({ ...error });
-    }
+  /* Handles */
+  const handleOnChange = (e, stateName) => {
+    form[stateName] = e.target.value;
+    error[stateName] = (!e.target.value) ? "Please enter your" : null;
+    formState({ ...form });
+    errorState({ ...error });
+  }
 
-    const handleMouseHover = (e, hover) => {
-      e.target.style.border = (!hover) 
-          ? "0px" 
-          : "1px solid #edede5";
-    } 
-    
+  const handleMouseHover = (e, hover) => {
+    e.target.style.border = (!hover) 
+        ? "0px" 
+        : "1px solid #edede5";
+  } 
+
+  const switchMode = (e) => {
+    lightModesState(e.target.checked);
+    localStorage.setItem("light-mode", e.target.checked);
+  }
+  
   if(!isLoading){
     return (
       <div className="main">  
@@ -86,7 +93,7 @@ const Index = () => {
                               className="switch-checkbox"
                               id="switch-mode"
                               checked={isLightMode}
-                              onChange={e => lightModesState(e.target.checked)}
+                              onChange={e => switchMode(e)}
                               type="checkbox"
                               style={{ display: "none" }}
                             />
@@ -106,14 +113,14 @@ const Index = () => {
                         </div>  
                       </Col>
                     </Row>
-                    <Row style={{ height: "100%" }}>
+                    <Row style={styles.maxHeight}>
                       <Col sm={12} style={styles.signinSection}>
-                        <Card body style={{ height: "100%", padding: "0px", overflow: "hidden", border: "0px", backgroundColor: "transparent"}}> 
-                              <Row style={{ height: "100%" }}>
-                                <Col style={{ background: "linear-gradient(to bottom, #6fa5dd 0%, #ffccff 93%)" }} className="d-none d-xl-block" xl={4} align="center">
-                                  <div style={{ padding: "0px 10px 50px 10px", fontSize: "26px", color: Theme.COLORS.DARKTEXT, width: "100%" }} className="vertical-center" >
-                                    <CardImg src={`${require(`../assets/img/n-icon.png`)}`} style={{ height: "150px", width: "150px" }} />
-                                    <p>WELCOME BACK</p>
+                        <Card body style={styles.card}> 
+                              <Row style={styles.maxHeight}>
+                                <Col style={styles.gradientBackground} className="d-none d-xl-block" xl={4} align="center">
+                                  <div style={styles.imgDiv} className="vertical-center" >
+                                    <CardImg src={`${require(`../assets/img/n-icon.png`)}`} style={styles.img} />
+                                    <p>Welcome Administrator</p>
                                   </div>
                                 </Col>
                                 <Col style={{ height: "100%", position: "relative" }} lg={12} xl={8} align="center">
@@ -257,6 +264,29 @@ const styles = {
     borderRadius: "25px", 
     background: "#5f97d6", 
     border: "0px" 
+  },
+  maxHeight: { 
+    height: "100%" 
+  },
+  card: { 
+    height: "100%", 
+    padding: "0px", 
+    overflow: "hidden", 
+    border: "0px", 
+    backgroundColor: "transparent"
+  },
+  gradientBackground: { 
+    background: "linear-gradient(to bottom, #6fa5dd 0%, #ffccff 93%)" 
+  },
+  imgDiv: { 
+    padding: "0px 10px 50px 10px", 
+    fontSize: "26px", 
+    color: Theme.COLORS.DARKTEXT, 
+    width: "100%" 
+  },
+  img: { 
+    height: "150px", 
+    width: "150px" 
   }
 }
 

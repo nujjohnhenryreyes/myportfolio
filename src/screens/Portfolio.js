@@ -19,9 +19,11 @@ import Theme from '../constants/Theme';
 import Lightbox from 'react-image-lightbox';
 
 const Index = () => {
+  const mode = localStorage.getItem("light-mode");
+  
   /* States */
   const [isLoading, loadingState] = React.useState(true);
-  const [isLightMode, lightModesState] = React.useState(true);
+  const [isLightMode, lightModesState] = React.useState(([null, `true`].includes(mode))? true : false);
   const [imageViewer, imageViewerState] = React.useState({ photoIndex: 0, isOpen: false });
   const [projectCode, projectCodeState] = React.useState(null);
   const [images, imagesState] = React.useState([]);
@@ -79,6 +81,11 @@ const Index = () => {
   const onCloseRequest = () => {
     imagesState([]);
     imageViewerState({ photoIndex: 0, isOpen: false });
+  }
+
+  const switchMode = (e) => {
+    lightModesState(e.target.checked);
+    localStorage.setItem("light-mode", e.target.checked);
   }
 
   const getProjectItems = () => {
@@ -152,7 +159,7 @@ const Index = () => {
                               className="switch-checkbox"
                               id="switch-mode"
                               checked={isLightMode}
-                              onChange={e => lightModesState(e.target.checked)}
+                              onChange={e => switchMode(e)}
                               type="checkbox"
                               style={{ display: "none" }}
                             />
